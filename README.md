@@ -2,9 +2,9 @@
 
 My Home Server using Raspberry Pi 5. Download this repository to your Raspberry Pi and run the commands to connect to your Pi.
 
-## Connect to HomePi
+## Connect to the Pi
 
-Connect to HomePi from your local network. In the [connect.sh](connect.sh) script I defined variables for user and host to connect to my HomePi, you can change them if needed.
+Connect to Raspberry Pi from your local network using the script [connect.sh](connect.sh). It defines variables for connections, such as user and host, you can change them if needed.
 
 ```bash
 just connect
