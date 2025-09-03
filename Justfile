@@ -2,6 +2,12 @@
 connect:
     ./connect.sh
 
+enable-remote-access:
+    rpi-connect on
+
+disable-remote-access:
+    rpi-connect off
+
 wifi-list:
     @echo 'Listing Wifi networks'
     sudo nmcli dev wifi list
