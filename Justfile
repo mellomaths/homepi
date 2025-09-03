@@ -1,4 +1,7 @@
 
+connect:
+    ./connect.sh
+
 wifi-list:
     @echo 'Listing Wifi networks'
     sudo nmcli dev wifi list
