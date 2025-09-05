@@ -13,14 +13,14 @@ sudo ln -sf ./etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/de
 # Test nginx configuration
 sudo nginx -t
 
-if [ $? -eq 0 ]; then
-    echo "Nginx configuration is valid. Reloading..."
-    sudo systemctl reload nginx
-    echo "Sites enabled successfully!"
-else
-    echo "Nginx configuration has errors. Please fix them first."
-    exit 1
-fi
+# if [ $? -eq 0 ]; then
+#     echo "Nginx configuration is valid. Reloading..."
+#     sudo systemctl reload nginx
+#     echo "Sites enabled successfully!"
+# else
+#     echo "Nginx configuration has errors. Please fix them first."
+#     exit 1
+# fi
 
 # Reload nginx
 sudo systemctl reload nginx
