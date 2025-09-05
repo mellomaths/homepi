@@ -21,7 +21,10 @@ network-priority-list:
 set-priority name priority:
     sudo nmcli connection modify "{{name}}" connection.autoconnect-priority {{priority}}
 
-# Docker Containers
+# Applications
+install name:
+    ./install.sh {{name}}
+
 start name:
     ./start.sh {{name}}
 
