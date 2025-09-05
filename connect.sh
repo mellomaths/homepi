@@ -5,7 +5,7 @@
 
 # Change the url, username and host if needed
 NAME="HomePi"
-URL="homepi.local"
+URL="192.168.1.100"
 USERNAME="homepi"
 SSH_HOST="$URL"
 
