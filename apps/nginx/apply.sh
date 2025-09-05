@@ -75,13 +75,28 @@ echo "=== Testing nginx configuration ==="
 sudo nginx -t 2>&1
 
 if [ $? -eq 0 ]; then
-    echo "Nginx configuration is valid. Reloading..."
-    sudo systemctl reload nginx
+    echo "Nginx configuration is valid."
+    
+    # Check if nginx is running
+    if systemctl is-active --quiet nginx; then
+        echo "Reloading nginx..."
+        sudo systemctl reload nginx
+    else
+        echo "Starting nginx service..."
+        sudo systemctl start nginx
+        sudo systemctl enable nginx
+    fi
+    
     echo "Sites enabled successfully!"
     echo "Available sites:"
     echo "  - http://homepi.local (main dashboard)"
     echo "  - http://glance.homepi.local (glance)"
     echo "  - http://portainer.homepi.local (portainer)"
+    
+    # Show nginx status
+    echo
+    echo "Nginx status:"
+    sudo systemctl status nginx --no-pager -l
 else
     echo "Nginx configuration has errors. Please fix them first."
     exit 1
