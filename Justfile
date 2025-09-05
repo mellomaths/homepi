@@ -21,6 +21,12 @@ network-priority-list:
 set-priority name priority:
     sudo nmcli connection modify "{{name}}" connection.autoconnect-priority {{priority}}
 
+chmod-all:
+    sudo chmod -R +x .
+    git add .
+    git commit -m "Set chmod+x to all files"
+    git push
+
 # Applications
 install name:
     cd ./apps/{{name}} && ./install.sh
