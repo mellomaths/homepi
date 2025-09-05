@@ -23,16 +23,16 @@ set-priority name priority:
 
 # Applications
 install name:
-    ./install.sh {{name}}
+    ./{{name}}/.install.sh {{name}}
 
 start name:
-    ./start.sh {{name}}
+    ./{{name}}/.start.sh {{name}}
 
 stop name:
-    ./stop.sh {{name}}
+    ./{{name}}/.stop.sh {{name}}
 
 status name:
     ./{{name}}/.status.sh 
 
-apply-changes:
-    ./nginx/apply-changes.sh
+apply name:
+    ./{{name}}/.apply.sh
