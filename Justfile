@@ -31,6 +31,5 @@ start name:
 stop name:
     ./stop.sh {{name}}
 
-nginx:
-    ./nginx/start.sh
+apply-changes:
     ./nginx/apply-changes.sh
