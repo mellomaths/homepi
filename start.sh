@@ -24,7 +24,7 @@ if [ "$APPLICATION" == "nginx" ]; then
     FOLDER_PATH="nginx"
 fi
 
-if [ FOLDER_PATH == "" ]; then
+if [ "$FOLDER_PATH" == "" ]; then
     echo "Error: Application '$APPLICATION' is not valid"
     exit 1
 fi
@@ -35,21 +35,21 @@ if [ ! -d "$FOLDER_PATH" ]; then
     exit 1
 fi
 
-# Check if docker-compose.yml exists in the folder
-if [ ! -f "$FOLDER_PATH/docker-compose.yml" ]; then
-    echo "Error: docker-compose.yml not found in '$FOLDER_PATH'"
+# Check if start.sh exists in the folder
+if [ ! -f "$FOLDER_PATH/start.sh" ]; then
+    echo "Error: start.sh not found in '$FOLDER_PATH'"
     exit 1
 fi
 
-echo "Starting Docker Compose in folder: $FOLDER_PATH"
+echo "Starting $APPLICATION"
 
 # Navigate to the folder and run docker compose up -d
-cd "$FOLDER_PATH" && docker compose up -d
+cd "$FOLDER_PATH" && ./start.sh
 
 # Check if the command was successful
 if [ $? -eq 0 ]; then
-    echo "Docker Compose started successfully in $FOLDER_PATH"
+    echo "Started successfully $APPLICATION"
 else
-    echo "Error: Failed to start Docker Compose in $FOLDER_PATH"
+    echo "Error: Failed to start $APPLICATION"
     exit 1
 fi
