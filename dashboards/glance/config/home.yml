@@ -6,8 +6,28 @@
   columns:
     - size: full
       widgets:
-        - type: docker-containers
-          hide-by-default: false
+        - type: monitor
+          cache: 1m
+          title: Services
+          sites:
+            - title: Jellyfin
+              url: https://yourdomain.com/
+              icon: si:jellyfin
+            - title: Gitea
+              url: https://yourdomain.com/
+              icon: si:gitea
+            - title: qBittorrent # only for Linux ISOs, of course
+              url: https://yourdomain.com/
+              icon: si:qbittorrent
+            - title: Immich
+              url: https://yourdomain.com/
+              icon: si:immich
+            - title: AdGuard Home
+              url: https://yourdomain.com/
+              icon: si:adguard
+            - title: Vaultwarden
+              url: https://yourdomain.com/
+              icon: si:vaultwarden
     - size: small
       widgets:
         - type: weather
