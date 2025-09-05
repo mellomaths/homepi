@@ -1,6 +1,5 @@
 server:
   assets-path: /app/assets
-  host: homepi.local
   port: 8001
 
 theme:
