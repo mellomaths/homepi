@@ -23,16 +23,16 @@ set-priority name priority:
 
 # Applications
 install name:
-    ./{{name}}/.install.sh {{name}}
+    ./apps/{{name}}/.install.sh {{name}}
 
 start name:
-    ./{{name}}/.start.sh {{name}}
+    ./apps/{{name}}/.start.sh {{name}}
 
 stop name:
-    ./{{name}}/.stop.sh {{name}}
+    ./apps/{{name}}/.stop.sh {{name}}
 
 status name:
-    ./{{name}}/.status.sh 
+    ./apps/{{name}}/.status.sh 
 
 apply name:
-    ./{{name}}/.apply.sh
+    ./apps/{{name}}/.apply.sh
