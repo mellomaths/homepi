@@ -20,6 +20,10 @@ if [ "$APPLICATION" == "portainer" ]; then
     FOLDER_PATH="dashboards/portainer"
 fi
 
+if [ "$APPLICATION" == "nginx" ]; then
+    FOLDER_PATH="nginx"
+fi
+
 
 if [ "$FOLDER_PATH" == "" ]; then
     echo "Error: Application '$APPLICATION' is not valid"
