@@ -16,6 +16,10 @@ if [ "$APPLICATION" == "glance" ]; then
     FOLDER_PATH="dashboards/glance"
 fi
 
+if [ "$APPLICATION" == "portainer" ]; then
+    FOLDER_PATH="dashboards/portainer"
+fi
+
 if [ FOLDER_PATH == "" ]; then
     echo "Error: Application '$APPLICATION' is not valid"
     exit 1
