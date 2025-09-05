@@ -1,6 +1,5 @@
 server:
   assets-path: /app/assets
-  port: 8001
 
 theme:
   # Note: assets are cached by the browser, changes to the CSS file
