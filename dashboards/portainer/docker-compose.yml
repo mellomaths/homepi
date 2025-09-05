@@ -1,41 +1,35 @@
+
+version: "2"
+
 services:
-  agent:
-    image: portainer/agent
-    environment:
-      # REQUIRED: Should be equal to the service name prefixed by "tasks." when
-      # deployed inside an overlay network
-      AGENT_CLUSTER_ADDR: tasks.agent
-      # AGENT_PORT: 9001
-      # LOG_LEVEL: debug
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /var/lib/docker/volumes:/var/lib/docker/volumes
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    restart: always
     networks:
-      - portainer_agent_network
-    deploy:
-      mode: global
-      placement:
-        constraints: [node.platform.os == linux]
+      - proxy
+    ports:
+      - "80:80"
+    volumes:
+      - "/var/run/docker.sock:/tmp/docker.sock:ro"
+      - "./vhost.d:/etc/nginx/vhost.d:ro"
 
   portainer:
-    image: portainer/portainer
-    command: -H tcp://tasks.agent:9001 --tlsskipverify
-    ports:
-      - "9000:9000"
-      - "8000:8000"
-    volumes:
-      - portainer_data:/data
+    image: portainer/portainer-ce:2.0.0
+    command: -H unix:///var/run/docker.sock
+    restart: always
     networks:
-      - portainer_agent_network
-    deploy:
-      mode: replicated
-      replicas: 1
-      placement:
-        constraints: [node.role == manager]
+      - proxy
+    environment:
+      - VIRTUAL_HOST=portainer.homepi.local
+      - VIRTUAL_PORT=9000
+    ports:
+      - 8000:8000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
 
 networks:
-  portainer_agent_network:
-    driver: overlay
+  proxy:
 
 volumes:
   portainer_data:
