@@ -1,0 +1,14 @@
+services:
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - "4000:80"  # Host_Port:Container_Port
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@example.com
+      PGADMIN_DEFAULT_PASSWORD: pgadmin
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  pgadmin_data:
