@@ -93,10 +93,9 @@ if [ $? -eq 0 ]; then
     
     echo "Sites enabled successfully!"
     echo "Available sites:"
-    echo "  - http://homepi.local (main dashboard)"
-    echo "  - http://pihole.homepi.local (pihole)"
-    echo "  - http://glance.homepi.local (glance)"
-    echo "  - http://portainer.homepi.local (portainer)"    
+    echo "  - http://homepi.net (main dashboard)"
+    echo "  - http://pihole.homepi.net (pihole)"
+    echo "  - http://glance.homepi.net (glance)"
     # Show nginx status
     echo
     echo "Nginx status:"
