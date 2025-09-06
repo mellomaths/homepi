@@ -1,2 +1,3 @@
-# Ignore the tyk-gateway-docker directory
-tyk-gateway-docker/*
+NOTES.md
+tyk.compose.conf
+bundle.zip
