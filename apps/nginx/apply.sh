@@ -24,6 +24,7 @@ sudo rm -f /etc/nginx/sites-enabled/*
 sudo ln -sf /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/
 sudo ln -sf /etc/nginx/sites-available/glance.conf /etc/nginx/sites-enabled/
 sudo ln -sf /etc/nginx/sites-available/portainer.conf /etc/nginx/sites-enabled/
+sudo ln -sf /etc/nginx/sites-available/pihole.conf /etc/nginx/sites-enabled/
 
 echo "=== Nginx Configuration Test ==="
 echo
@@ -90,9 +91,9 @@ if [ $? -eq 0 ]; then
     echo "Sites enabled successfully!"
     echo "Available sites:"
     echo "  - http://homepi.local (main dashboard)"
+    echo "  - http://pihole.homepi.local (pihole)"
     echo "  - http://glance.homepi.local (glance)"
-    echo "  - http://portainer.homepi.local (portainer)"
-    
+    echo "  - http://portainer.homepi.local (portainer)"    
     # Show nginx status
     echo
     echo "Nginx status:"
