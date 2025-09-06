@@ -9,9 +9,6 @@ services:
     volumes:
       - ./tyk.standalone.conf:/opt/tyk-gateway/tyk.conf
       - ./apps:/opt/tyk-gateway/apps
-      - ./middleware:/opt/tyk-gateway/middleware
-      - ./certs:/opt/tyk-gateway/certs
-      - ./policies:/opt/tyk-gateway/policies
     environment:
       - TYK_GW_SECRET=foo
     depends_on:
