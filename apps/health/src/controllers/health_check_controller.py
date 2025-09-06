@@ -20,7 +20,7 @@ def health_check(session: Session = Depends(get_postgres_session)):
     return JSONResponse(content=response.model_dump(), status_code=status_code)
 
 
-@router.get("/postgres", status_code=status.HTTP_200_OK, response_model=HealthCheckResponse, responses={503: {"model": HealthCheckResponse}})
+@router.get("/postgres/", status_code=status.HTTP_200_OK, response_model=HealthCheckResponse, responses={503: {"model": HealthCheckResponse}})
 def postgres_health_check(session: Session = Depends(get_postgres_session)):
     is_postgres_up, error = check_postgres_health(session)
     status_code = status.HTTP_200_OK 
