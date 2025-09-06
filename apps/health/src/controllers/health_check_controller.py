@@ -5,7 +5,10 @@ from starlette.responses import JSONResponse
 from checks.postgres import check_postgres_health, get_postgres_session
 from models.health_check_response import HealthCheckResponse, ServiceStatusType
 
-router = APIRouter(redirect_slashes=False)
+router = APIRouter(
+    prefix='/check',
+    tags=['health-check'],
+    redirect_slashes=False)
 
 
 @router.get("/", status_code=status.HTTP_200_OK, response_model=HealthCheckResponse, responses={503: {"model": HealthCheckResponse}})
