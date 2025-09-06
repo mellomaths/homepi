@@ -31,7 +31,6 @@ sudo ln -sf /etc/nginx/sites-available/portainer.conf /etc/nginx/sites-enabled/
 sudo ln -sf /etc/nginx/sites-available/cockpit.conf /etc/nginx/sites-enabled/
 sudo ln -sf /etc/nginx/sites-available/pgadmin.conf /etc/nginx/sites-enabled/
 sudo ln -sf /etc/nginx/sites-available/api.conf /etc/nginx/sites-enabled/
-sudo ln -sf /etc/nginx/sites-available/health.conf /etc/nginx/sites-enabled/
 
 echo "=== Nginx Configuration Test ==="
 echo
@@ -104,7 +103,6 @@ if [ $? -eq 0 ]; then
     echo "  - http://cockpit.homepi.net (cockpit)"
     echo "  - http://pgadmin.homepi.net (pgadmin)"
     echo "  - http://api.homepi.net (api)"
-    echo "  - http://health.homepi.net (health)"
     # Show nginx status
     echo
     echo "Nginx status:"
