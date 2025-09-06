@@ -12,6 +12,7 @@
           sites:
             - title: Pi-Hole
               url: http://homepi.local:8000/
+              check-url: http://homepi.local:8000/
               icon: si:pihole
     - size: small
       widgets:
