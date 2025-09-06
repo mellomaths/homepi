@@ -4,4 +4,4 @@ from controllers.health_check_controller import router as health_check_api
 
 router = APIRouter(redirect_slashes=False)
 
-router.include_router(health_check_api, prefix='/health', tags=['health'])
+router.include_router(health_check_api, prefix='/check', tags=['health-check'])
