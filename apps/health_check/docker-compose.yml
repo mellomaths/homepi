@@ -1,0 +1,11 @@
+services:
+  health-check-api:
+    container_name: health-check-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000"
+    environment:
+      - POSTGRES_URL=postgresql://postgres:postgres@postgres:5432/postgres
+
