@@ -24,10 +24,10 @@ sudo cp "$CONFIG_DIR/sites-available/"* /etc/nginx/sites-available/
 
 # Remove old symlinks and create new ones
 echo "Creating symlinks..."
-sudo rm -f /etc/nginx/sites-enabled/*
 sudo ln -sf /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/
 sudo ln -sf /etc/nginx/sites-available/glance.conf /etc/nginx/sites-enabled/
 sudo ln -sf /etc/nginx/sites-available/pihole.conf /etc/nginx/sites-enabled/
+sudo ln -sf /etc/nginx/sites-available/portainer.conf /etc/nginx/sites-enabled/
 
 echo "=== Nginx Configuration Test ==="
 echo
@@ -96,6 +96,7 @@ if [ $? -eq 0 ]; then
     echo "  - http://homepi.net (main dashboard)"
     echo "  - http://pihole.homepi.net (pihole)"
     echo "  - http://glance.homepi.net (glance)"
+    echo "  - http://portainer.homepi.net (portainer)"
     # Show nginx status
     echo
     echo "Nginx status:"
