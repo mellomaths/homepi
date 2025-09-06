@@ -11,7 +11,7 @@
           title: Services
           sites:
             - title: Pi-Hole
-              url: https://homepi.local:8000/
+              url: http://homepi.local:8000/
               icon: si:pihole
     - size: small
       widgets:
