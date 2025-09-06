@@ -1,9 +1,0 @@
-version: '3.8'
-
-services:
-
-  adminer:
-    image: adminer # Official Adminer image
-    restart: always
-    ports:
-      - "4000:8080" # Maps host port 8080 to container port 8080
