@@ -29,6 +29,7 @@ sudo ln -sf /etc/nginx/sites-available/glance.conf /etc/nginx/sites-enabled/
 sudo ln -sf /etc/nginx/sites-available/pihole.conf /etc/nginx/sites-enabled/
 sudo ln -sf /etc/nginx/sites-available/portainer.conf /etc/nginx/sites-enabled/
 sudo ln -sf /etc/nginx/sites-available/cockpit.conf /etc/nginx/sites-enabled/
+sudo ln -sf /etc/nginx/sites-available/adminer.conf /etc/nginx/sites-enabled/
 
 echo "=== Nginx Configuration Test ==="
 echo
@@ -99,6 +100,7 @@ if [ $? -eq 0 ]; then
     echo "  - http://glance.homepi.net (glance)"
     echo "  - http://portainer.homepi.net (portainer)"
     echo "  - http://cockpit.homepi.net (cockpit)"
+    echo "  - http://adminer.homepi.net (adminer)"
     # Show nginx status
     echo
     echo "Nginx status:"
