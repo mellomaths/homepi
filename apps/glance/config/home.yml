@@ -34,6 +34,18 @@
               url: http://pgadmin.homepi.net/
               check-url: http://pgadmin.homepi.net/
               icon: si:adminer
+        - type: monitor
+          cache: 1m
+          title: APIs
+          sites:
+            - title: API
+              url: http://api.homepi.net/docs
+              check-url: http://api.homepi.net/docs
+              icon: si:scaleway
+            - title: Health Check API
+              url: http://health.homepi.net/docs
+              check-url: http://health.homepi.net/docs
+              icon: si:fastapi
     - size: small
       widgets:
         - type: weather
