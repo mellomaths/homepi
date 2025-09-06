@@ -10,6 +10,10 @@
           cache: 1m
           title: Services
           sites:
+            - title: Cockpit
+              url: http://cockpit.homepi.net/
+              check-url: http://cockpit.homepi.net/
+              icon: si:cockpit
             - title: Pi-Hole
               url: http://pihole.homepi.net/
               check-url: http://pihole.homepi.net/
