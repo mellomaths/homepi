@@ -6,6 +6,10 @@ CONFIG_DIR="$SCRIPT_DIR/config"
 
 echo "Applying nginx configuration from $CONFIG_DIR"
 
+# Remove sites directories
+sudo rm -rf /etc/nginx/sites-enabled
+sudo rm -rf /etc/nginx/sites-available
+
 # Create directories if they don't exist
 sudo mkdir -p /etc/nginx/sites-available
 sudo mkdir -p /etc/nginx/sites-enabled
@@ -23,7 +27,6 @@ echo "Creating symlinks..."
 sudo rm -f /etc/nginx/sites-enabled/*
 sudo ln -sf /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/
 sudo ln -sf /etc/nginx/sites-available/glance.conf /etc/nginx/sites-enabled/
-sudo ln -sf /etc/nginx/sites-available/portainer.conf /etc/nginx/sites-enabled/
 sudo ln -sf /etc/nginx/sites-available/pihole.conf /etc/nginx/sites-enabled/
 
 echo "=== Nginx Configuration Test ==="
