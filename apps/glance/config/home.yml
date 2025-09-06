@@ -11,8 +11,8 @@
           title: Services
           sites:
             - title: Pi-Hole
-              url: http://homepi.local:8000/
-              check-url: http://homepi.local:8000/
+              url: http://pihole.homepi.net/
+              check-url: http://pihole.homepi.net/
               icon: si:pihole
     - size: small
       widgets:
