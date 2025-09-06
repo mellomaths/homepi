@@ -3,7 +3,6 @@ services:
 
   portainer:
     image: portainer/portainer-ce:lts
-    command: -H unix:///var/run/docker.sock
     restart: always
     networks:
       - proxy
