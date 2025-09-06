@@ -28,7 +28,7 @@
           sites:
             - title: Postgres
               url: http://192.168.1.100:5432/
-              check-url: http://192.168.1.100:5432/
+              check-url: http://192.168.1.100:3001/api/v1/postgres
               icon: si:postgresql
             - title: PGAdmin
               url: http://pgadmin.homepi.net/
@@ -38,13 +38,13 @@
           cache: 1m
           title: APIs
           sites:
-            - title: API
+            - title: API Gateway
               url: http://api.homepi.net/docs
               check-url: http://api.homepi.net/docs
               icon: si:scaleway
             - title: Health Check API
-              url: http://health.homepi.net/docs
-              check-url: http://health.homepi.net/docs
+              url: http://192.168.1.100:3001/docs
+              check-url: http://192.168.1.100:3001/docs
               icon: si:fastapi
     - size: small
       widgets:
