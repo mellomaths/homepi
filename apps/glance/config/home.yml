@@ -22,14 +22,18 @@
               url: http://portainer.homepi.net/
               check-url: http://portainer.homepi.net/
               icon: si:portainer
+        - type: monitor
+          cache: 1m
+          title: Databases
+          sites:
             - title: Postgres
               url: http://192.168.1.100:5432/
               check-url: http://192.168.1.100:5432/
-              icon: si:postgres
+              icon: si:postgresql
             - title: PGAdmin
               url: http://pgadmin.homepi.net/
               check-url: http://pgadmin.homepi.net/
-              icon: si:pgadmin
+              icon: si:adminer
     - size: small
       widgets:
         - type: weather
