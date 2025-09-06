@@ -12,7 +12,8 @@ logger = get_logger()
 app = FastAPI(
     title=settings.app_name,
     version=settings.app_version,
-    description=settings.app_description)
+    description=settings.app_description,
+    ignore_trailing_slash=True)
 
 app.add_middleware(
     CORSMiddleware,
