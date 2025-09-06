@@ -1,9 +1,9 @@
-version: '3.3'
+
 services:
   tyk-gateway:
     image: docker.tyk.io/tyk-gateway/tyk-gateway:latest
     ports:
-      - 8080:8080
+      - 9000:8080
     networks:
       - tyk
     volumes:
