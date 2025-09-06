@@ -2,6 +2,7 @@ version: '3.3'
 services:
   tyk-gateway:
     image: docker.tyk.io/tyk-gateway/tyk-gateway:latest
+    platform: linux/amd64
     ports:
       - 8080:8080
     networks:
