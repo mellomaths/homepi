@@ -1,0 +1,16 @@
+
+services:
+  postgres:
+    image: postgres:16-alpine # Using the latest Alpine-based PostgreSQL image
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Persistent storage for database data
+    ports:
+      - "5432:5432" # Expose PostgreSQL port to the host
+    restart: always
+
+volumes:
+  postgres_data:
