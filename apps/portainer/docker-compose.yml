@@ -2,6 +2,7 @@
 services:
 
   portainer:
+    container_name: portainer
     image: portainer/portainer-ce:lts
     restart: always
     ports:
