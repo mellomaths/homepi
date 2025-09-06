@@ -1,0 +1,2 @@
+# Ignore the tyk-gateway-docker directory
+tyk-gateway-docker/*
