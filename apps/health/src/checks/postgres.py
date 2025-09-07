@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.sql import text
 
 from config.env import Environment
 
@@ -20,7 +21,7 @@ def check_postgres_health(session: Session):
 
     try:
         # to check database we will execute raw query
-        session.execute('SELECT 1')
+        session.execute(text("SELECT 1"))
     except Exception as e:
         error = str(e)
         is_database_working = False
