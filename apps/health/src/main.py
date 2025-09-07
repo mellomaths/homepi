@@ -34,7 +34,7 @@ def custom_openapi():
         description=settings.app.description,
         routes=app.routes,
         servers = [
-            { "url": f"http://api.hompi.net/health", "description": "HomePi Health Check API" },
+            { "url": f"http://api.homepi.net/health", "description": "HomePi Health Check API" },
         ]
     )
     app.openapi_schema = openapi_schema
