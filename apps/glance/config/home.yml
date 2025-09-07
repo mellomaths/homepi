@@ -44,7 +44,7 @@
               icon: si:scaleway
             - title: Health Check API
               url: http://api.homepi.net/health/docs
-              check-url: http://api.homepi.net/health/docs
+              check-url: http://api.homepi.net/health/up
               icon: si:fastapi
     - size: small
       widgets:
