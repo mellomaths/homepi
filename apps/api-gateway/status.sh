@@ -1,17 +1,44 @@
+check_container() {
+    local container_name="$1"
+    
+    # Check if running
+    if docker ps --filter "name=$container_name" --filter "status=running" --format "{{.Names}}" | grep -q "$container_name"; then
+        echo "✅ $container_name is running"
+        
+        # Get status details
+        local status=$(docker ps --filter "name=$container_name" --format "{{.Status}}")
+        echo "Status: $status"
+        
+        # Check health if available
+        local health=$(docker inspect --format='{{.State.Health.Status}}' "$container_name" 2>/dev/null)
+        if [ "$health" = "healthy" ]; then
+            echo "Health: ✅ Healthy"
+        elif [ "$health" = "unhealthy" ]; then
+            echo "Health: ❌ Unhealthy"
+        else
+            echo "Health: ⚠️ No health check configured"
+        fi
+        
+        return 0
+    else
+        echo "❌ $container_name is not running"
+        return 1
+    fi
+}
+
+check_api_is_up() {
+    local api_name="$1"
+    local api_url="$2"
+    status_code=$(curl -s -o /dev/null -w "%{http_code}" $api_url)
+    if [ $status_code -eq 200 ]; then
+        echo "✅ $api_name is up and running"
+    else
+        echo "❌ $api_name is down"
+    fi
+}
+
 # Docker :: Health check API
-docker ps | grep health-check-api
-if [ $? -eq 0 ]; then
-    echo "✅ (Health Check API) Docker container is running"
-else
-    echo "❌ (Health Check API) Docker container is down"
-fi
+check_container "health-check-api"
 
 # Check if Health Check API is up and running
-# This will check if the /up endpoint returns a 200 status code
-status_code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3001/up)
-if [ $status_code -eq 200 ]; then
-    echo "✅ (Health Check API) Application is up and running"
-else
-    echo "❌ (Health Check API) Application is down"
-fi
-
+check_api_is_up "Health Check API" "http://localhost:3001/up"
