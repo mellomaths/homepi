@@ -1,3 +1,1 @@
-docker compose down
-
-docker compose up -d
+./stop.sh && ./start.sh
