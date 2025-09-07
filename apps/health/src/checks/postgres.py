@@ -5,7 +5,7 @@ from sqlalchemy.sql import text
 
 from config.env import Environment
 
-SQLALCHEMY_DATABASE_URL = Environment.load().postgres_url
+SQLALCHEMY_DATABASE_URL = Environment.load().postgres.url
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL

@@ -1,8 +1,72 @@
 from functools import lru_cache
+from pydantic import BaseModel
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from dotenv import load_dotenv, find_dotenv
 
-load_dotenv(find_dotenv())
+
+class ApplicationSettings(BaseModel):
+    """
+    Application settings.
+    """
+    name: str = "health-check"
+    version: str = "0.0.1"
+    description: str = "Health Check API"
+    root_path: str = "/health"
+
+
+class APISettings(BaseModel):
+    """
+    API settings.
+    """
+    version: str = "v1"
+    path: str = "/api/v1"
+
+
+class ServerSettings(BaseModel):
+    """
+    Server settings.
+    """
+    http_port: int = 3000
+
+
+class FeatureFlags(BaseModel):
+    """
+    Feature flags.
+    """
+    pass
+
+
+class LoggerSettings(BaseModel):
+    """
+    Logger settings.
+    """
+    name: str = "health-check-api"
+    level: str = "TRACE"
+    format: str = '%(asctime)s [%(processName)s: %(process)d] [%(threadName)s: %(thread)d] [%(levelname)s] %(name)s: %(message)s'
+    file: str = "app.log"
+    max_bytes: int = 1048576 # 1MB
+    backup_count: int = 5 # Number of backup log files to keep
+
+
+class PostgresSettings(BaseModel):
+    """
+    Postgres settings.
+    """
+    dialect: str = "postgresql+psycopg2"
+    host: str = "localhost"
+    port: int = 5432
+    database_name: str = "postgres"
+    username: str = "postgres"
+    password: str = "postgres"
+
+
+class CorsSettings(BaseModel):
+    """
+    CORS settings.
+    """
+    allow_origins: list[str] = ["*"]
+    allow_credentials: bool = True
+    allow_methods: list[str] = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+    allow_headers: list[str] = ['*']
 
 
 class Environment(BaseSettings):
@@ -11,64 +75,38 @@ class Environment(BaseSettings):
     """
 
     model_config = SettingsConfigDict(
-        env_file='.env',
-        env_file_encoding='utf-8',
-        case_sensitive=True,
-        extra='ignore'
+        env_nested_delimiter='__',
+        extra='ignore',
     )
     py_env: str = "local"  # Environment type (local, dev, prod)
-
-    # Application Settings
-    app_name: str = "health-check"
-    app_version: str = "0.0.1"
-    app_description: str = "Health Check API"
-    app_root_path: str = "/health"
-    
-    # API Settings
-    api_version: str = "v1"
-    api_path: str = f"/api/{api_version}"
-
-    # Server Settings
-    http_port: int = 3000
-
-    # Feature Flags
-    # ------------------------------
-
-    # Logging Settings
-    logger_name: str = "health-check-api"
-    log_level: str = "TRACE"  # Default log level
-    log_format: str = '%(asctime)s [%(processName)s: %(process)d] [%(threadName)s: %(thread)d] [%(levelname)s] %(name)s: %(message)s'
-    log_file: str = "app.log"
-    log_max_bytes: int = 1048576 # 1MB
-    log_backup_count: int = 5 # Number of backup log files to keep
-
-    service_name: str = "health-check"
-
-    # Postgres Settings
-    postgres_dialect: str = "postgresql+psycopg2"
-    postgres_host: str = "localhost"
-    postgres_port: int = 5432
-    postgres_database_name: str = "postgres"
-    postgres_username: str = "postgres"
-    postgres_password: str = "postgres"
-
-    # CORS Settings
-    cors_allow_origins: list[str] = ["*"]
-    cors_allow_credentials: bool = True
-    cors_allow_methods: list[str] = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'] # Allow common HTTP methods
-    cors_allow_headers: list[str] = ['*']
+    app: ApplicationSettings
+    api: APISettings
+    server: ServerSettings
+    feature_flags: FeatureFlags
+    logger: LoggerSettings
+    postgres: PostgresSettings
+    cors: CorsSettings
 
     @property
     def postgres_url(self):
-        return f"{self.postgres_dialect}://{self.postgres_username}:{self.postgres_password}@{self.postgres_host}:{self.postgres_port}/{self.postgres_database_name}"
+        """
+        Get the postgres URL.
+        """
+        return f"{self.postgres.dialect}://{self.postgres.username}:{self.postgres.password}@{self.postgres.host}:{self.postgres.port}/{self.postgres.database_name}"
 
     @property
     def is_production(self):
+        """
+        Check if the environment is production.
+        """
         return self.py_env == "production"
 
     @staticmethod
     @lru_cache()
     def load():
+        """
+        Load the environment.
+        """
         return Environment()
 
 

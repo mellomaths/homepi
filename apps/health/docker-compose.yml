@@ -8,5 +8,4 @@ services:
       - "3001:3000"
     environment:
       - PY_ENV=production
-      - POSTGRES_HOST=host.docker.internal
-
+      - POSTGRES__HOST=host.docker.internal
