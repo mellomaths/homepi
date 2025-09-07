@@ -1,10 +1,8 @@
-import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
 from config.env import get_environment
 from config.logging.logger import get_logger
-from config.logging.logging_settings import LOGGING_CONFIG
 from api import router as api_router
 
 settings = get_environment()
@@ -39,8 +37,3 @@ def custom_openapi():
 
 
 app.openapi = custom_openapi
-
-if __name__ == "__main__":
-    logger.info(f"Starting {settings.app_name} on port {settings.http_port}")
-    _reload = not settings.py_env == "production"
-    uvicorn.run(app, log_config=LOGGING_CONFIG, workers=4, host="127.0.0.1", port=settings.http_port, reload=_reload) 

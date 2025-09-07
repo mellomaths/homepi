@@ -1,6 +1,5 @@
 import logging
-import logging.config
-from config.logging.logging_settings import LOGGING_CONFIG
+
 from functools import lru_cache
 from config.env import Environment
 
@@ -9,7 +8,7 @@ from config.env import Environment
 def load_logger():
     """Load and configure the logger based on settings."""
     environment = Environment.load()
-    logging.config.dictConfig(LOGGING_CONFIG)
+    logging.basicConfig(level=logging.INFO, format=environment.log_format)
     logger = logging.getLogger(environment.logger_name)
     return logger
 

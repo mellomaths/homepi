@@ -1,0 +1,33 @@
+version: 1
+disable_existing_loggers: True
+formatters:
+  standard:
+    format: "%(asctime)s [%(processName)s: %(process)d] [%(threadName)s: %(thread)d] [%(levelname)s] %(name)s: %(message)s"
+handlers:
+  console:
+    class: logging.StreamHandler
+    formatter: standard
+    stream: ext://sys.stdout
+  file_handler:
+    class: logging.handlers.RotatingFileHandler
+    formatter: standard
+    filename: app.log
+    maxBytes: 1048576
+    backupCount: 5
+    mode: w
+loggers:
+  uvicorn:
+    handlers: [console, file_handler]
+    level: INFO
+    propagate: False
+  uvicorn.access:
+    handlers: [console, file_handler]
+    level: INFO
+    propagate: False
+  health-check-api: # Logger for your application
+    handlers: [console, file_handler]
+    level: INFO
+    propagate: False
+root:
+  handlers: [console, file_handler]
+  level: INFO
