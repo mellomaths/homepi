@@ -19,6 +19,7 @@ def health_check(session: Session = Depends(get_postgres_session), logger: Logge
     log.info("Checking health of the application")
     log.info("Checking postgres health")
     is_postgres_up, error = check_postgres_health(session)
+    log.info(f"Postgres health check response: {is_postgres_up}, {error}")
     status_code = status.HTTP_200_OK 
     if not is_postgres_up or error:
         status_code = status.HTTP_503_SERVICE_UNAVAILABLE
@@ -34,6 +35,7 @@ def postgres_health_check(session: Session = Depends(get_postgres_session), logg
     log = logger.getChild("postgres_health_check")
     log.info("Checking postgres health")
     is_postgres_up, error = check_postgres_health(session)
+    log.info(f"Postgres health check response: {is_postgres_up}, {error}")
     status_code = status.HTTP_200_OK 
     if not is_postgres_up or error:
         status_code = status.HTTP_503_SERVICE_UNAVAILABLE
