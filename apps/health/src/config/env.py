@@ -46,7 +46,7 @@ class Environment(BaseSettings):
 
     # Postgres Settings
     postgres_dialect: str = "postgresql+psycopg2"
-    postgres_host: str = "postgres"
+    postgres_host: str = "localhost"
     postgres_port: int = 5432
     postgres_database_name: str = "postgres"
     postgres_username: str = "postgres"
