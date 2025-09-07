@@ -15,6 +15,8 @@ check_container() {
             echo "✅ Healthy"
         elif [ "$health" = "unhealthy" ]; then
             echo "❌ Unhealthy"
+        elif [ "$health" = "starting" ]; then
+            echo "⚠️ Starting"
         else
             echo "⚠️ No health check configured"
         fi
