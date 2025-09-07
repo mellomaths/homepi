@@ -13,10 +13,6 @@ app = FastAPI(
     description=settings.app_description,
     ignore_trailing_slash=True,
     root_path=settings.app_root_path,
-    root_path_in_servers=False,
-    servers = [
-        { "url": f"http://api.hompi.net", "description": "HomePi Health Check API" },
-    ]
 )
 
 app.add_middleware(
@@ -37,6 +33,9 @@ def custom_openapi():
         version=settings.app_version,
         description=settings.app_description,
         routes=app.routes,
+        servers = [
+            { "url": f"http://api.hompi.net/health", "description": "HomePi Health Check API" },
+        ]
     )
     app.openapi_schema = openapi_schema
     return app.openapi_schema
