@@ -28,7 +28,7 @@
           sites:
             - title: Postgres
               url: http://192.168.1.100:5432/
-              check-url: http://api.homepi.net/health/check/postgres
+              check-url: http://api.homepi.net/health/api/v1/check/postgres
               icon: si:postgresql
             - title: PGAdmin
               url: http://pgadmin.homepi.net/
