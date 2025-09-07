@@ -15,8 +15,8 @@
               check-url: http://cockpit.homepi.net/
               icon: si:cockpit
             - title: Pi-Hole
-              url: http://pihole.homepi.net/
-              check-url: http://pihole.homepi.net/
+              url: http://pihole.homepi.net/admin
+              check-url: http://pihole.homepi.net/admin
               icon: si:pihole
             - title: Portainer
               url: http://portainer.homepi.net/
@@ -28,7 +28,7 @@
           sites:
             - title: Postgres
               url: http://192.168.1.100:5432/
-              check-url: http://192.168.1.100:3001/api/v1/check/postgres
+              check-url: http://api.homepi.net/health/check/postgres
               icon: si:postgresql
             - title: PGAdmin
               url: http://pgadmin.homepi.net/
@@ -43,8 +43,8 @@
               check-url: http://api.homepi.net/up
               icon: si:scaleway
             - title: Health Check API
-              url: http://192.168.1.100:3001/docs
-              check-url: http://192.168.1.100:3001/docs
+              url: http://api.homepi.net/health/docs
+              check-url: http://api.homepi.net/health/docs
               icon: si:fastapi
     - size: small
       widgets:
