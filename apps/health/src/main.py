@@ -12,9 +12,9 @@ app = FastAPI(
     version=settings.app_version,
     description=settings.app_description,
     ignore_trailing_slash=True,
-    root_path=settings.app_root_path,
+    root_path_in_servers=False,
     servers = [
-        { "url": f"http://api.hompi.net/", "description": "HomePi Health Check API" },
+        { "url": f"http://api.hompi.net", "description": "HomePi Health Check API" },
     ]
 )
 
