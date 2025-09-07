@@ -58,6 +58,13 @@ class PostgresSettings(BaseModel):
     username: str = "postgres"
     password: str = "postgres"
 
+    @property
+    def url(self):
+        """
+        Get the postgres URL.
+        """
+        return f"{self.dialect}://{self.username}:{self.password}@{self.host}:{self.port}/{self.database_name}"
+
 
 class CorsSettings(BaseModel):
     """
@@ -79,20 +86,13 @@ class Environment(BaseSettings):
         extra='ignore',
     )
     py_env: str = "local"  # Environment type (local, dev, prod)
-    app: ApplicationSettings
-    api: APISettings
-    server: ServerSettings
-    feature_flags: FeatureFlags
-    logger: LoggerSettings
-    postgres: PostgresSettings
-    cors: CorsSettings
-
-    @property
-    def postgres_url(self):
-        """
-        Get the postgres URL.
-        """
-        return f"{self.postgres.dialect}://{self.postgres.username}:{self.postgres.password}@{self.postgres.host}:{self.postgres.port}/{self.postgres.database_name}"
+    app: ApplicationSettings = ApplicationSettings()    
+    api: APISettings = APISettings()
+    server: ServerSettings = ServerSettings()
+    feature_flags: FeatureFlags = FeatureFlags()
+    logger: LoggerSettings = LoggerSettings()
+    postgres: PostgresSettings = PostgresSettings()
+    cors: CorsSettings = CorsSettings()
 
     @property
     def is_production(self):
