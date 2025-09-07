@@ -1,6 +1,6 @@
 check_container() {
     local container_name="$1"
-    
+    echo "Checking status of $container_name..."
     # Check if running
     if docker ps --filter "name=$container_name" --filter "status=running" --format "{{.Names}}" | grep -q "$container_name"; then
         echo "✅ $container_name is running"
@@ -12,11 +12,11 @@ check_container() {
         # Check health if available
         local health=$(docker inspect --format='{{.State.Health.Status}}' "$container_name" 2>/dev/null)
         if [ "$health" = "healthy" ]; then
-            echo "Health: ✅ Healthy"
+            echo "✅ Healthy"
         elif [ "$health" = "unhealthy" ]; then
-            echo "Health: ❌ Unhealthy"
+            echo "❌ Unhealthy"
         else
-            echo "Health: ⚠️ No health check configured"
+            echo "⚠️ No health check configured"
         fi
         
         return 0
@@ -37,8 +37,9 @@ check_api_is_up() {
     fi
 }
 
-# Docker :: Health check API
+echo "Checking status of API Gateway..."
+echo "================================================"
+echo "Health Check API:"
 check_container "health-check-api"
-
-# Check if Health Check API is up and running
 check_api_is_up "Health Check API" "http://localhost:3001/up"
+echo "================================================"
