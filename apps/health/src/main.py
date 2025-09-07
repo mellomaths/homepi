@@ -11,7 +11,13 @@ app = FastAPI(
     title=settings.app_name,
     version=settings.app_version,
     description=settings.app_description,
-    ignore_trailing_slash=True)
+    ignore_trailing_slash=True,
+    root_path=settings.app_root_path,
+    root_path_in_servers=True,
+    servers = [
+        { "url": f"http://api.hompi.net/health", "description": "HomePi Health Check API" },
+    ]
+)
 
 app.add_middleware(
     CORSMiddleware,

@@ -22,6 +22,7 @@ class Environment(BaseSettings):
     app_name: str = "health-check"
     app_version: str = "0.0.1"
     app_description: str = "Health Check API"
+    app_root_path: str = "/health"
     
     # API Settings
     api_version: str = "v1"

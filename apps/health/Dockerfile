@@ -13,4 +13,4 @@ RUN uv sync --frozen --no-cache
 EXPOSE 3000
 
 # Run the application.
-CMD ["/app/.venv/bin/fastapi", "run", "src/main.py", "--port", "3000", "--host", "0.0.0.0", "--workers", "4", "--root-path", "/health"]
+CMD ["/app/.venv/bin/fastapi", "run", "src/main.py", "--port", "3000", "--host", "0.0.0.0", "--workers", "4"]
