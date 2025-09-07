@@ -1,3 +1,3 @@
-cd ./health-check-api && ./deploy.sh
+./health-check-api/deploy.sh
 
 ./status.sh
