@@ -7,5 +7,5 @@ services:
     ports:
       - "3001:3000"
     environment:
-      - POSTGRES_URL=postgresql://postgres:postgres@postgres:5432/postgres
+      - PY_ENV=production
 

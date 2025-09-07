@@ -51,7 +51,6 @@ class Environment(BaseSettings):
     postgres_database_name: str = "postgres"
     postgres_username: str = "postgres"
     postgres_password: str = "postgres"
-    postgres_url: str = f"{postgres_dialect}://{postgres_username}:{postgres_password}@{postgres_host}:{postgres_port}/{postgres_database_name}"
 
     # CORS Settings
     cors_allow_origins: list[str] = ["*"]
@@ -59,6 +58,13 @@ class Environment(BaseSettings):
     cors_allow_methods: list[str] = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'] # Allow common HTTP methods
     cors_allow_headers: list[str] = ['*']
 
+    @property
+    def postgres_url(self):
+        return f"{self.postgres_dialect}://{self.postgres_username}:{self.postgres_password}@{self.postgres_host}:{self.postgres_port}/{self.postgres_database_name}"
+
+    @property
+    def is_production(self):
+        return self.py_env == "production"
 
     @staticmethod
     @lru_cache()
