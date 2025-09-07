@@ -42,3 +42,8 @@ def custom_openapi():
 
 
 app.openapi = custom_openapi
+
+
+@app.get("/up")
+async def up():
+    return {"status": "ok"}
