@@ -8,4 +8,4 @@ services:
       - "3001:3000"
     environment:
       - PY_ENV=production
-      - POSTGRES__HOST=postgres
+      - POSTGRES__HOST=192.168.1.100
