@@ -1,1 +1,1 @@
-cd ./health-check-api && ./stop.sh && ./start.sh
+cd ./health-check-api && ./deploy.sh
