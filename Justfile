@@ -40,5 +40,8 @@ stop name:
 status name:
     cd ./apps/{{name}} && ./status.sh 
 
+restart name:
+    cd ./apps/{{name}} && ./stop.sh && ./start.sh
+
 apply name:
     cd ./apps/{{name}} && ./apply.sh
