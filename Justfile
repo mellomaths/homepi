@@ -43,5 +43,5 @@ status name:
 restart name:
     cd ./apps/{{name}} && ./stop.sh && ./start.sh
 
-apply name:
-    cd ./apps/{{name}} && ./apply.sh
+deploy name:
+    cd ./apps/{{name}} && ./deploy.sh
