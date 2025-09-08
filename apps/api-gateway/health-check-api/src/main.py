@@ -1,9 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
+from fastapi.responses import JSONResponse
 from config.env import get_environment
 from config.logging.logger import get_logger
 from api import router as api_router
+from models.up_response import UpResponse
 
 settings = get_environment()
 logger = get_logger()
@@ -44,6 +46,7 @@ def custom_openapi():
 app.openapi = custom_openapi
 
 
-@app.get("/up")
+@app.get("/up", status_code=status.HTTP_200_OK, response_model=UpResponse, responses={503: {"model": UpResponse}})
 async def up():
-    return {"status": "ok"}
+    logger.info("Checking if the application is up")
+    return JSONResponse(content=UpResponse(status="ok").model_dump(), status_code=status.HTTP_200_OK)
