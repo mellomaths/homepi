@@ -31,18 +31,19 @@ apps=(mellomaths/health-check-api mellomaths/football-fan-api)
 for app in "${apps[@]}"
 do    
     echo -e "${YELLOW}📁 Processing application: $app${NC}"
-
+    dir_name=$(basename "$app")
+    echo -e "  ${BLUE}Directory name: $dir_name${NC}"
     # Check if app directory exists
-    if [[ -d "$app" ]]; then
+    if [[ -d "$dir_name" ]]; then
         echo -e "  ${BLUE}Found $app directory, running deployment...${NC}"
         # Runs git pull in the app directory
         echo -e "  ${BLUE}Running: git pull in $app directory${NC}"
-        (cd "$app" && git pull)
+        (cd "$dir_name" && git pull)
     else
         echo -e "  ${RED}❌ $app directory does not exist, skipping...${NC}"
         # Runs gh repo clone in the app directory
         echo -e "  ${BLUE}Running: gh repo clone $app in $app directory${NC}"
-        (mkdir -p "$app" && gh repo clone $app $app)
+        (mkdir "$dir_name" && gh repo clone $app)
     fi
 
     # Runs docker compose up --build -d in the app directory
