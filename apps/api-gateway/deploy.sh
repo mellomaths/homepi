@@ -17,7 +17,6 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
 echo -e "${BLUE}🚀 Starting API Gateway deployment...${NC}"
-echo -e "Applications found: ${BLUE}$(ls -d */ | tr -d '/')${NC}"
 echo ""
 
 # Counter for tracking deployments
@@ -28,7 +27,6 @@ skipped_count=0
 # Find all subdirectories and process them
 # Get list of directories first
 dirs=($(find . -maxdepth 1 -type d -not -name "." -exec basename {} \;))
-
 echo -e "${BLUE}Debug: Found directories: ${dirs[*]}${NC}"
 
 # Process each directory
