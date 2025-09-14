@@ -50,6 +50,10 @@
               url: http://api.homepi.net/health/docs
               check-url: http://api.homepi.net/health/up
               icon: si:fastapi
+            - title: Football Fan API
+              url: http://api.homepi.net/football-fan/docs
+              check-url: http://api.homepi.net/football-fan/up
+              icon: si:fastapi
     - size: small
       widgets:
         - type: weather
