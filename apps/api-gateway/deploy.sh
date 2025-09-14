@@ -39,16 +39,13 @@ for app in "${apps[@]}"; do
     echo -e "  ${BLUE}Directory name: $dir_name${NC}"
     # Check if app directory exists
     if [[ -d "$dir_name" ]]; then
-        echo -e "  ${BLUE}Found $app directory, running deployment...${NC}"
-        # Runs git pull in the app directory
-        echo -e "  ${BLUE}Running: git pull in $app directory${NC}"
-        (cd "$dir_name" && git pull)
-    else
-        echo -e "  ${YELLOW}⚠️ $dir_name directory does not exist, creating and cloning...${NC}"
-        # Runs gh repo clone in the app directory
-        echo -e "  ${BLUE}Running: gh repo clone $app in $dir_name directory${NC}"
-        (gh repo clone $app)
+        echo -e "  ${YELLOW}⚠️ Found $app directory, removing...${NC}"
+        rm -rf "$dir_name"
     fi
+
+    # Runs gh repo clone in the app directory
+    echo -e "  ${BLUE}Running: gh repo clone $app in $dir_name directory${NC}"
+    (gh repo clone $app)
 
     # Runs docker compose up --build -d in the app directory
     echo -e "  ${BLUE}Running: docker compose up --build -d in $dir_name directory${NC}"

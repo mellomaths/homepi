@@ -38,6 +38,10 @@
               url: http://pgadmin.homepi.net/
               check-url: http://pgadmin.homepi.net/
               icon: si:adminer
+            - title: Redis
+              url: http://redis.homepi.net/
+              check-url: http://redis.homepi.net/
+              icon: si:redis
         - type: monitor
           cache: 1m
           title: APIs
