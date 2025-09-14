@@ -17,6 +17,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
 echo -e "${BLUE}🚀 Starting API Gateway deployment...${NC}"
+echo -e "Applications found: ${BLUE}$(ls -d */ | tr -d '/')${NC}"
 echo ""
 
 # Counter for tracking deployments
