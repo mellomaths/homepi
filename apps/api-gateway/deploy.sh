@@ -37,8 +37,7 @@ for i in 1 2 3 4 5; do
 done
 
 # Process each directory
-for app in "${apps[@]}"
-do    
+for app in "${apps[@]}"; do
     echo -e "${YELLOW}📁 Processing application: $app${NC}"
     dir_name=$(get_dir_name "$app")
     echo -e "  ${BLUE}Directory name: $dir_name${NC}"
@@ -59,6 +58,7 @@ do
     echo -e "  ${BLUE}Running: docker compose up --build -d in $dir_name directory${NC}"
     (cd "$dir_name" && docker compose up --build -d)
     echo -e "  ${GREEN}✅ Successfully deployed $app${NC}"
+    echo "Test"
     ((deployed_count++))
     echo ""
 done
