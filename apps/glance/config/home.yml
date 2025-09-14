@@ -39,8 +39,8 @@
               check-url: http://pgadmin.homepi.net/
               icon: si:adminer
             - title: Redis
-              url: http://redis.homepi.net/
-              check-url: http://redis.homepi.net/
+              url: http://192.168.1.100:6379/
+              check-url: http://api.homepi.net/health/api/v1/check/redis
               icon: si:redis
         - type: monitor
           cache: 1m
