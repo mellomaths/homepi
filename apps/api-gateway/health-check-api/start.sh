@@ -1,2 +1,0 @@
-cd health-check-api
-docker compose up --build -d

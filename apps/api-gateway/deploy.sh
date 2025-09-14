@@ -24,42 +24,32 @@ deployed_count=0
 failed_count=0
 skipped_count=0
 
-# Find all subdirectories and process them
-# Get list of directories first
-dirs=($(find . -maxdepth 1 -type d -not -name "." -exec basename {} \;))
-echo -e "${BLUE}Debug: Found directories: ${dirs[*]}${NC}"
+# List of apps to deploy
+apps=(mellomaths/health-check-api mellomaths/football-fan-api)
 
 # Process each directory
-for dir_name in "${dirs[@]}"
-do
-    # Skip hidden directories
-    if [[ "$dir_name" =~ ^\..* ]]; then
-        continue
-    fi
-    
-    echo -e "${YELLOW}📁 Processing application: $dir_name${NC}"
-    
-    # Check if deploy.sh exists in the subdirectory
-    if [[ -f "$dir_name/deploy.sh" ]]; then
-        echo -e "  ${BLUE}Found deploy.sh, running deployment...${NC}"
-        echo -e "  ${BLUE}Running: $dir_name/deploy.sh${NC}"
-        
-        # Make sure deploy.sh is executable
-        chmod +x "$dir_name/deploy.sh"
-        
-        # Change to the subdirectory and run deploy.sh
-        if (cd "$dir_name" && ./deploy.sh); then
-            echo -e "  ${GREEN}✅ Successfully deployed $dir_name${NC}"
-            ((deployed_count++))
-        else
-            echo -e "  ${RED}❌ Failed to deploy $dir_name${NC}"
-            ((failed_count++))
-        fi
+for app in "${apps[@]}"
+do    
+    echo -e "${YELLOW}📁 Processing application: $app${NC}"
+
+    # Check if app directory exists
+    if [[ -d "$app" ]]; then
+        echo -e "  ${BLUE}Found $app directory, running deployment...${NC}"
+        # Runs git pull in the app directory
+        echo -e "  ${BLUE}Running: git pull in $app directory${NC}"
+        (cd "$app" && git pull)
     else
-        echo -e "  ${YELLOW}⚠️  No deploy.sh found in $dir_name, skipping...${NC}"
-        ((skipped_count++))
+        echo -e "  ${RED}❌ $app directory does not exist, skipping...${NC}"
+        # Runs gh repo clone in the app directory
+        echo -e "  ${BLUE}Running: gh repo clone $app in $app directory${NC}"
+        (cd "$app" && gh repo clone $app $app)
     fi
-    
+
+    # Runs docker compose up --build -d in the app directory
+    echo -e "  ${BLUE}Running: docker compose up --build -d in $app directory${NC}"
+    (cd "$app" && docker compose up --build -d)
+    echo -e "  ${GREEN}✅ Successfully deployed $app${NC}"
+    ((deployed_count++))
     echo ""
 done
 
