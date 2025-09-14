@@ -26,12 +26,15 @@ failed_count=0
 skipped_count=0
 
 # Find all subdirectories and process them
-for dir in */; do
-    # Remove trailing slash
-    dir_name="${dir%/}"
-    
-    # Skip if it's not a directory or if it's a hidden directory
-    if [[ ! -d "$dir_name" ]] || [[ "$dir_name" =~ ^\..* ]]; then
+# Get list of directories first
+dirs=($(find . -maxdepth 1 -type d -not -name "." -exec basename {} \;))
+
+echo -e "${BLUE}Debug: Found directories: ${dirs[*]}${NC}"
+
+# Process each directory
+for dir_name in "${dirs[@]}"; do
+    # Skip hidden directories
+    if [[ "$dir_name" =~ ^\..* ]]; then
         continue
     fi
     
