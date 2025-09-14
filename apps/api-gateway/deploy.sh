@@ -42,7 +42,7 @@ do
         echo -e "  ${RED}❌ $app directory does not exist, skipping...${NC}"
         # Runs gh repo clone in the app directory
         echo -e "  ${BLUE}Running: gh repo clone $app in $app directory${NC}"
-        (cd "$app" && gh repo clone $app $app)
+        (mkdir -p "$app" && gh repo clone $app $app)
     fi
 
     # Runs docker compose up --build -d in the app directory
