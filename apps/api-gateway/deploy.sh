@@ -32,10 +32,6 @@ function get_dir_name {
     echo "$1" | sed 's/.*\///'
 }
 
-for i in 1 2 3 4 5; do
-    echo "Current iteration: $i"
-done
-
 # Process each directory
 for app in "${apps[@]}"; do
     echo -e "${YELLOW}📁 Processing application: $app${NC}"
@@ -58,9 +54,7 @@ for app in "${apps[@]}"; do
     echo -e "  ${BLUE}Running: docker compose up --build -d in $dir_name directory${NC}"
     (cd "$dir_name" && docker compose up --build -d)
     echo -e "  ${GREEN}✅ Successfully deployed $app${NC}"
-    echo "Test"
-    ((deployed_count++))
-    echo ""
+    deployed_count=$((deployed_count + 1))
 done
 
 # Print summary
