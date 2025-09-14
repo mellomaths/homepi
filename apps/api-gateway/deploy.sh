@@ -30,7 +30,8 @@ dirs=($(find . -maxdepth 1 -type d -not -name "." -exec basename {} \;))
 echo -e "${BLUE}Debug: Found directories: ${dirs[*]}${NC}"
 
 # Process each directory
-for dir_name in "${dirs[@]}"; do
+for dir_name in "${dirs[@]}"
+do
     # Skip hidden directories
     if [[ "$dir_name" =~ ^\..* ]]; then
         continue
