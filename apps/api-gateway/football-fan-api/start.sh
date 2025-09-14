@@ -1,2 +1,2 @@
-cd health-check-api
+cd football-fan-api
 docker compose up --build -d
