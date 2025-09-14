@@ -27,11 +27,16 @@ skipped_count=0
 # List of apps to deploy
 apps=(mellomaths/health-check-api mellomaths/football-fan-api)
 
+# Get directory name from repository name
+function get_dir_name {
+    echo "$1" | sed 's/.*\///'
+}
+
 # Process each directory
 for app in "${apps[@]}"
 do    
     echo -e "${YELLOW}📁 Processing application: $app${NC}"
-    dir_name=$(basename "$app")
+    dir_name=$(get_dir_name "$app")
     echo -e "  ${BLUE}Directory name: $dir_name${NC}"
     # Check if app directory exists
     if [[ -d "$dir_name" ]]; then
@@ -40,9 +45,9 @@ do
         echo -e "  ${BLUE}Running: git pull in $app directory${NC}"
         (cd "$dir_name" && git pull)
     else
-        echo -e "  ${RED}❌ $app directory does not exist, skipping...${NC}"
+        echo -e "  ${YELLOW}⚠️ $dir_name directory does not exist, creating and cloning...${NC}"
         # Runs gh repo clone in the app directory
-        echo -e "  ${BLUE}Running: gh repo clone $app in $app directory${NC}"
+        echo -e "  ${BLUE}Running: gh repo clone $app in $dir_name directory${NC}"
         (mkdir "$dir_name" && gh repo clone $app)
     fi
 
