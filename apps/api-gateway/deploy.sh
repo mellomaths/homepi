@@ -52,8 +52,8 @@ do
     fi
 
     # Runs docker compose up --build -d in the app directory
-    echo -e "  ${BLUE}Running: docker compose up --build -d in $app directory${NC}"
-    (cd "$app" && docker compose up --build -d)
+    echo -e "  ${BLUE}Running: docker compose up --build -d in $dir_name directory${NC}"
+    (cd "$dir_name" && docker compose up --build -d)
     echo -e "  ${GREEN}✅ Successfully deployed $app${NC}"
     ((deployed_count++))
     echo ""
