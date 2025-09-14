@@ -32,6 +32,12 @@ function get_dir_name {
     echo "$1" | sed 's/.*\///'
 }
 
+for i in 1 2 3 4 5; do
+  echo "Current iteration: $i"
+  # The 'break' statement will terminate the loop immediately
+  break
+done
+
 # Process each directory
 for app in "${apps[@]}"
 do    
