@@ -33,9 +33,7 @@ function get_dir_name {
 }
 
 for i in 1 2 3 4 5; do
-  echo "Current iteration: $i"
-  # The 'break' statement will terminate the loop immediately
-  break
+    echo "Current iteration: $i"
 done
 
 # Process each directory
