@@ -17,9 +17,11 @@ Default URL: `http://<pi-ip>:5000` (container listens on host port **5000**).
 
 ## Configure Docker clients (required)
 
-Plain HTTP registries must be listed as **insecure** on every machine that pushes or pulls (including the Pi).
+The registry serves **plain HTTP**. Docker assumes **HTTPS** for any registry hostname unless you whitelist it. You must configure **every host** that runs `docker pull` or `docker push` against this registry—including **the Raspberry Pi itself** when you pull images there.
 
-**Linux** (`/etc/docker/daemon.json`):
+**Linux** (Pi, servers, Docker Engine): edit `/etc/docker/daemon.json`. If the file does not exist, create it. If it already has keys (logging, proxies, etc.), merge `insecure-registries` into the **same JSON object**—do not duplicate top-level `{}`.
+
+Example for a Pi at `192.168.1.100`:
 
 ```json
 {
@@ -27,9 +29,29 @@ Plain HTTP registries must be listed as **insecure** on every machine that pushe
 }
 ```
 
-Adjust the host to your Pi IP or LAN DNS name. Merge with existing keys if the file already exists. Restart Docker: `sudo systemctl restart docker`.
+Then reload Docker:
+
+```bash
+sudo systemctl restart docker
+```
+
+Confirm Docker picked it up (look for `Insecure Registries`):
+
+```bash
+docker info | grep -i insecure -A 10
+```
+
+You should see `192.168.1.100:5000` listed.
 
 **Docker Desktop (Windows/macOS):** Settings → Docker Engine → add `insecure-registries` as above → Apply & Restart.
+
+### Troubleshooting
+
+**Error:** `http: server gave HTTP response to HTTPS client` when pulling or pushing.
+
+**Cause:** Docker tried HTTPS against an HTTP-only registry.
+
+**Fix:** Add this registry URL (host **and** port as you use them in image names) to `insecure-registries` on **that machine**, restart Docker, retry the pull.
 
 ### HTTPS via Nginx (optional)
 
