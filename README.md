@@ -25,6 +25,7 @@ A comprehensive home server setup running on Raspberry Pi 5, featuring a complet
 - **Nginx** - Reverse proxy and load balancer
 - **Kafka** - Message streaming platform
 - **Docker** - Container orchestration
+- **Docker Registry** - Private image registry on the LAN (`apps/registry`)
 
 ## 🛠️ Quick Start
 
@@ -150,7 +151,8 @@ homepi/
 │   ├── pihole/             # DNS ad blocker
 │   ├── portainer/          # Docker management
 │   ├── postgres/           # Database
-│   └── redis/              # Cache storage
+│   ├── redis/              # Cache storage
+│   └── registry/           # Private Docker image registry
 ├── connect.sh              # SSH connection script
 ├── Justfile                # Task definitions
 └── README.md               # This file

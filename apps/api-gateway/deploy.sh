@@ -19,6 +19,12 @@ cd "$SCRIPT_DIR"
 echo -e "${BLUE}🚀 Starting API Gateway deployment...${NC}"
 echo ""
 
+# DEPLOY_MODE=build (default): fresh clone + docker compose up --build -d
+# DEPLOY_MODE=registry: git pull or clone, then docker compose pull && up -d (images from your registry)
+DEPLOY_MODE="${DEPLOY_MODE:-build}"
+echo -e "${BLUE}Mode: ${DEPLOY_MODE}${NC}"
+echo ""
+
 # Counter for tracking deployments
 deployed_count=0
 failed_count=0
@@ -37,19 +43,27 @@ for app in "${apps[@]}"; do
     echo -e "${YELLOW}📁 Processing application: $app${NC}"
     dir_name=$(get_dir_name "$app")
     echo -e "  ${BLUE}Directory name: $dir_name${NC}"
-    # Check if app directory exists
-    if [[ -d "$dir_name" ]]; then
-        echo -e "  ${YELLOW}⚠️ Found $app directory, removing...${NC}"
-        rm -rf "$dir_name"
+
+    if [[ "$DEPLOY_MODE" == "registry" ]]; then
+        if [[ -d "$dir_name" ]]; then
+            echo -e "  ${BLUE}Running: git pull in $dir_name${NC}"
+            (cd "$dir_name" && git pull)
+        else
+            echo -e "  ${BLUE}Running: gh repo clone $app in $dir_name directory${NC}"
+            gh repo clone "$app"
+        fi
+        echo -e "  ${BLUE}Running: docker compose pull && docker compose up -d in $dir_name directory${NC}"
+        (cd "$dir_name" && docker compose pull && docker compose up -d)
+    else
+        if [[ -d "$dir_name" ]]; then
+            echo -e "  ${YELLOW}⚠️ Found $app directory, removing...${NC}"
+            rm -rf "$dir_name"
+        fi
+        echo -e "  ${BLUE}Running: gh repo clone $app in $dir_name directory${NC}"
+        gh repo clone "$app"
+        echo -e "  ${BLUE}Running: docker compose up --build -d in $dir_name directory${NC}"
+        (cd "$dir_name" && docker compose up --build -d)
     fi
-
-    # Runs gh repo clone in the app directory
-    echo -e "  ${BLUE}Running: gh repo clone $app in $dir_name directory${NC}"
-    (gh repo clone $app)
-
-    # Runs docker compose up --build -d in the app directory
-    echo -e "  ${BLUE}Running: docker compose up --build -d in $dir_name directory${NC}"
-    (cd "$dir_name" && docker compose up --build -d)
     echo -e "  ${GREEN}✅ Successfully deployed $app${NC}"
     deployed_count=$((deployed_count + 1))
 done
