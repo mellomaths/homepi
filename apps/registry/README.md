@@ -19,7 +19,12 @@ Default URL: `http://<pi-ip>:5000` (container listens on host port **5000**).
 
 The registry serves **plain HTTP**. Docker assumes **HTTPS** for any registry hostname unless you whitelist it. You must configure **every host** that runs `docker pull` or `docker push` against this registry—including **the Raspberry Pi itself** when you pull images there.
 
-**Linux** (Pi, servers, Docker Engine): edit `/etc/docker/daemon.json`. If the file does not exist, create it. If it already has keys (logging, proxies, etc.), merge `insecure-registries` into the **same JSON object**—do not duplicate top-level `{}`.
+**Linux** (Pi, servers, Docker Engine) depends on how Docker runs:
+
+- **Root Docker (default on many servers):** `docker version` has no `Context: rootless`. Use **`/etc/docker/daemon.json`**, then `sudo systemctl restart docker`.
+- **Rootless Docker** (common on a user install; `docker version` shows **`Context: rootless`**): the daemon does **not** read `/etc/docker/daemon.json`. Use **`~/.config/docker/daemon.json`** for the same user that runs `docker` (e.g. `homepi`), then restart the **user** service: `systemctl --user restart docker`. If you edit the wrong file, `insecure-registries` will never appear in `docker info`.
+
+If the file does not exist, create it. If it already has keys (logging, proxies, etc.), merge `insecure-registries` into the **same JSON object**—do not duplicate top-level `{}`.
 
 Example for a Pi at `192.168.1.100`:
 
@@ -29,10 +34,14 @@ Example for a Pi at `192.168.1.100`:
 }
 ```
 
-Then reload Docker:
+Then reload Docker (**pick one**):
 
 ```bash
+# Root Docker
 sudo systemctl restart docker
+
+# Rootless Docker (same user as docker run / pull)
+systemctl --user restart docker
 ```
 
 Confirm Docker picked it up (look for `Insecure Registries`):
@@ -52,6 +61,8 @@ You should see `192.168.1.100:5000` listed.
 **Cause:** Docker tried HTTPS against an HTTP-only registry.
 
 **Fix:** Add this registry URL (host **and** port as you use them in image names) to `insecure-registries` on **that machine**, restart Docker, retry the pull.
+
+**Still missing from `docker info`?** Run `docker version`—if you see **`Context: rootless`**, you must edit **`~/.config/docker/daemon.json`** and run **`systemctl --user restart docker`**, not `/etc/docker/daemon.json` + `sudo systemctl restart docker`.
 
 ### HTTPS via Nginx (optional)
 
