@@ -3,7 +3,8 @@
 # API Gateway Deployment Script
 # This script runs ./deploy.sh in every subdirectory of the api-gateway folder
 
-set -e  # Exit on any error
+# Per-app errors are handled in the loop (failed_count / deployed_count).
+# Do not use set -e here or the script would exit before updating counters.
 
 # Colors for output
 RED='\033[0;31m'
@@ -44,28 +45,42 @@ for app in "${apps[@]}"; do
     dir_name=$(get_dir_name "$app")
     echo -e "  ${BLUE}Directory name: $dir_name${NC}"
 
+    app_ok=1
+
     if [[ "$DEPLOY_MODE" == "registry" ]]; then
         if [[ -d "$dir_name" ]]; then
             echo -e "  ${BLUE}Running: git pull in $dir_name${NC}"
-            (cd "$dir_name" && git pull)
+            (cd "$dir_name" && git pull) || app_ok=0
         else
             echo -e "  ${BLUE}Running: gh repo clone $app in $dir_name directory${NC}"
-            gh repo clone "$app"
+            gh repo clone "$app" || app_ok=0
         fi
-        echo -e "  ${BLUE}Running: docker compose pull && docker compose up -d in $dir_name directory${NC}"
-        (cd "$dir_name" && docker compose pull && docker compose up -d)
+        if [[ "$app_ok" -eq 1 ]]; then
+            echo -e "  ${BLUE}Running: docker compose pull && docker compose up -d in $dir_name directory${NC}"
+            (cd "$dir_name" && docker compose pull && docker compose up -d) || app_ok=0
+        fi
     else
         if [[ -d "$dir_name" ]]; then
             echo -e "  ${YELLOW}⚠️ Found $app directory, removing...${NC}"
-            rm -rf "$dir_name"
+            rm -rf "$dir_name" || app_ok=0
         fi
-        echo -e "  ${BLUE}Running: gh repo clone $app in $dir_name directory${NC}"
-        gh repo clone "$app"
-        echo -e "  ${BLUE}Running: docker compose up --build -d in $dir_name directory${NC}"
-        (cd "$dir_name" && docker compose up --build -d)
+        if [[ "$app_ok" -eq 1 ]]; then
+            echo -e "  ${BLUE}Running: gh repo clone $app in $dir_name directory${NC}"
+            gh repo clone "$app" || app_ok=0
+        fi
+        if [[ "$app_ok" -eq 1 ]]; then
+            echo -e "  ${BLUE}Running: docker compose up --build -d in $dir_name directory${NC}"
+            (cd "$dir_name" && docker compose up --build -d) || app_ok=0
+        fi
     fi
-    echo -e "  ${GREEN}✅ Successfully deployed $app${NC}"
-    deployed_count=$((deployed_count + 1))
+
+    if [[ "$app_ok" -eq 1 ]]; then
+        echo -e "  ${GREEN}✅ Successfully deployed $app${NC}"
+        deployed_count=$((deployed_count + 1))
+    else
+        echo -e "  ${RED}❌ Failed to deploy $app${NC}"
+        failed_count=$((failed_count + 1))
+    fi
 done
 
 # Print summary
