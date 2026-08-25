@@ -53,8 +53,8 @@ Loki (3100), Alloy (12345), node-exporter (9100), and cAdvisor (8080) stay on th
 
 - `grafana/grafana:13.1`
 - `grafana/loki:3.5`
-- `grafana/alloy:v1.10`
-- `prom/prometheus:v3.4`
+- `grafana/alloy:v1.10.0`
+- `prom/prometheus:v3.4.2`
 - `prom/node-exporter:v1.9.1`
 - `gcr.io/cadvisor/cadvisor:v0.52.1`
 

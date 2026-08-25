@@ -39,7 +39,7 @@ services:
       - loki_data:/loki
 
   alloy:
-    image: grafana/alloy:v1.10
+    image: grafana/alloy:v1.10.0
     container_name: alloy
     restart: unless-stopped
     user: "0"
@@ -60,7 +60,7 @@ services:
       - loki
 
   prometheus:
-    image: prom/prometheus:v3.4
+    image: prom/prometheus:v3.4.2
     container_name: prometheus
     restart: unless-stopped
     ports:
