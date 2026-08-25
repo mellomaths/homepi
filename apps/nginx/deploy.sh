@@ -32,6 +32,7 @@ sudo ln -sf /etc/nginx/sites-available/cockpit.conf /etc/nginx/sites-enabled/
 sudo ln -sf /etc/nginx/sites-available/pgadmin.conf /etc/nginx/sites-enabled/
 sudo ln -sf /etc/nginx/sites-available/api.conf /etc/nginx/sites-enabled/
 sudo ln -sf /etc/nginx/sites-available/grafana.conf /etc/nginx/sites-enabled/
+sudo ln -sf /etc/nginx/sites-available/kafka.conf /etc/nginx/sites-enabled/
 
 echo "=== Nginx Configuration Test ==="
 echo
@@ -105,6 +106,7 @@ if [ $? -eq 0 ]; then
     echo "  - http://pgadmin.homepi.net (pgadmin)"
     echo "  - http://api.homepi.net (api)"
     echo "  - http://grafana.homepi.net (grafana)"
+    echo "  - http://kafka.homepi.net (kafka ui)"
     # Show nginx status
     echo
     echo "Nginx status:"

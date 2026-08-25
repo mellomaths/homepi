@@ -37,6 +37,10 @@
               url: http://api.homepi.net/up
               check-url: http://api.homepi.net/up
               icon: si:cloudflare
+            - title: kafka.homepi.net
+              url: http://kafka.homepi.net/
+              check-url: http://kafka.homepi.net/
+              icon: si:cloudflare
         - type: monitor
           cache: 1m
           title: Services
@@ -61,6 +65,10 @@
               url: http://192.168.1.100:3000/
               check-url: http://192.168.1.100:3000/
               icon: si:grafana
+            - title: Kafka UI
+              url: http://192.168.1.100:8004/
+              check-url: http://192.168.1.100:8004/
+              icon: si:apachekafka
         - type: monitor
           cache: 1m
           title: Databases
