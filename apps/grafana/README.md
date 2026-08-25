@@ -2,7 +2,9 @@
 
 Monitoring stack on the Pi: Grafana dashboards, Loki logs, Grafana Alloy (log collector), Prometheus metrics, node-exporter, and cAdvisor.
 
-Promtail is end of life (March 2026). This stack uses [Grafana Alloy](https://grafana.com/docs/alloy/latest/) instead, collecting host logs from `/var/log` and Docker container logs via the Docker socket.
+Promtail is end of life (March 2026). This stack uses [Grafana Alloy](https://grafana.com/docs/alloy/latest/) instead, collecting host logs from `/var/log` and Docker container logs via the Docker socket. Alloy does **not** bind-mount `/var/lib/docker/containers`, which is missing under rootless Docker and caused `permission denied` on start.
+
+`./start.sh` uses `docker compose up -d --remove-orphans` so the old `grafana-promtail-1` container is removed.
 
 ## Start and stop
 
