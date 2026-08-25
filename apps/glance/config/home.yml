@@ -14,6 +14,9 @@
               url: http://cockpit.homepi.net/
               check-url: http://cockpit.homepi.net/
               icon: si:cloudflare
+              alt-status-codes:
+                - 301
+                - 302
             - title: pihole.homepi.net
               url: http://pihole.homepi.net/admin
               check-url: http://pihole.homepi.net/admin
@@ -42,6 +45,10 @@
               url: http://192.168.1.100:7999/
               check-url: http://192.168.1.100:7999/
               icon: si:cockpit
+              # cockpit-tls redirects HTTP → HTTPS (301); Glance only treats 200 as OK by default
+              alt-status-codes:
+                - 301
+                - 302
             - title: Pi-Hole
               url: http://192.168.1.100:8000/admin
               check-url: http://192.168.1.100:8000/admin
