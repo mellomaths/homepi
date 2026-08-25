@@ -1,16 +1,128 @@
-version: '3.7'
 services:
-  loki:
-    image: grafana/loki:latest
-    ports:
-      - 3100:3100
-    volumes:
-      - ./loki-config.yml:/etc/loki/loki-config.yaml
-  promtail:
-    image: grafana/promtail:latest
-    volumes:
-      - ./promtail-config.yml:/etc/promtail/promtail-config.yaml
   grafana:
-    image: grafana/grafana
+    image: grafana/grafana:13.1
+    container_name: grafana
+    restart: unless-stopped
     ports:
-      - 3000:3000
+      - "3000:3000"
+    environment:
+      TZ: America/Sao_Paulo
+      GF_SECURITY_ADMIN_USER: ${GF_SECURITY_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD:-admin}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_SERVER_ROOT_URL: http://grafana.homepi.net
+      GF_SERVER_DOMAIN: grafana.homepi.net
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./provisioning:/etc/grafana/provisioning:ro
+    depends_on:
+      - prometheus
+      - loki
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:3000/api/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  loki:
+    image: grafana/loki:3.5
+    container_name: loki
+    restart: unless-stopped
+    command:
+      - -config.file=/etc/loki/local-config.yaml
+    environment:
+      TZ: America/Sao_Paulo
+    volumes:
+      - ./loki-config.yml:/etc/loki/local-config.yaml:ro
+      - loki_data:/loki
+
+  alloy:
+    image: grafana/alloy:v1.10
+    container_name: alloy
+    restart: unless-stopped
+    user: "0"
+    command:
+      - run
+      - /etc/alloy/config.alloy
+      - --server.http.listen-addr=0.0.0.0:12345
+      - --storage.path=/var/lib/alloy/data
+    environment:
+      TZ: America/Sao_Paulo
+    volumes:
+      - ./config.alloy:/etc/alloy/config.alloy:ro
+      - /var/log:/var/log:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - alloy_data:/var/lib/alloy/data
+    depends_on:
+      - loki
+
+  prometheus:
+    image: prom/prometheus:v3.4
+    container_name: prometheus
+    restart: unless-stopped
+    ports:
+      - "3003:9090"
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=15d
+      - --web.enable-lifecycle
+    environment:
+      TZ: America/Sao_Paulo
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    depends_on:
+      - node-exporter
+      - cadvisor
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  node-exporter:
+    image: prom/node-exporter:v1.9.1
+    container_name: node-exporter
+    restart: unless-stopped
+    pid: host
+    command:
+      - --path.procfs=/host/proc
+      - --path.sysfs=/host/sys
+      - --path.rootfs=/rootfs
+      - --collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)
+    environment:
+      TZ: America/Sao_Paulo
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.52.1
+    container_name: cadvisor
+    restart: unless-stopped
+    privileged: true
+    devices:
+      - /dev/kmsg:/dev/kmsg
+    command:
+      - --housekeeping_interval=30s
+      - --docker_only=true
+    environment:
+      TZ: America/Sao_Paulo
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+
+volumes:
+  grafana_data:
+  loki_data:
+  alloy_data:
+  prometheus_data:
