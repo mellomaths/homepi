@@ -23,7 +23,7 @@ A comprehensive home server setup running on Raspberry Pi 5, featuring a complet
 
 ### Infrastructure
 - **Nginx** - Reverse proxy and load balancer
-- **Kafka** - Message streaming platform
+- **Kafka** - Message streaming platform (KRaft) with Kafka UI
 - **Docker** - Container orchestration
 - **Docker Registry** - Private image registry on the LAN (`apps/registry`)
 
@@ -108,6 +108,7 @@ Once services are running, access them through the Glance dashboard at `http://1
 - **Grafana**: `http://grafana.homepi.net/`
 - **API Gateway**: `http://api.homepi.net/`
 - **PGAdmin**: `http://pgadmin.homepi.net/`
+- **Kafka UI**: `http://kafka.homepi.net/`
 
 ## 🔧 Configuration
 

@@ -1,1 +1,1 @@
-docker compose up -d
+docker compose --env-file kafka.env up -d
